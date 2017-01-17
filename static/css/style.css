@@ -19,4 +19,5 @@ html, body, section, .full-height {
 #markdown {
     overflow: auto;
     border-left: 1px solid black;
+    border-right: 1px solid black;
 }
