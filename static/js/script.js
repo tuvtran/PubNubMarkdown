@@ -1,7 +1,11 @@
-$(document).ready(function () {
+$(document).ready(function() {
     // References to pad and markdown elements
     var $pad = $("#raw-pad");
     var $markdown = $("#markdown");
+
+    // set up timeout to trigger event when user finished typing
+    var typingTimer;                // time identifier
+    var doneTypingInterval = 500;   // time in ms, in this case it's 250ms
 
     // Initialize Showdownjs
     var converter = new showdown.Converter();
@@ -24,7 +28,6 @@ $(document).ready(function () {
 
     pubnub.addListener({
         message: function(obj) {
-            console.log(obj);
             $pad.val(obj.message.such);
             $markdown.html(converter.makeHtml(obj.message.such));
         },
@@ -53,7 +56,7 @@ $(document).ready(function () {
         withPresence: true
     });
 
-    var publishValue = function (text) {
+    var publishValue = function(text) {
         pubnub.publish(
             {
                 message: {
@@ -71,10 +74,17 @@ $(document).ready(function () {
         );
     }
 
-    var convertTextAreaToMarkdown = function () {
+    // When user is typing
+    $pad.on('input propertychange keydown', function() {
         var markdownText = $pad.val();
-        publishValue(markdownText);
-    }
+        $markdown.html(converter.makeHtml(markdownText));
+    });
 
-    $pad.on('change paste keyup', convertTextAreaToMarkdown);
+    // When user is done typing for 250ms, trigger the doneTyping event handler
+    $pad.on('keyup', function() {
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(function() {
+            publishValue($pad.val());
+        }, doneTypingInterval);
+    });
 });
