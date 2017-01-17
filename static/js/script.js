@@ -10,14 +10,15 @@ $(document).ready(function () {
     const publishKey = "pub-c-851e2df6-cacf-487b-a0cc-39177adc1c03";
     const subscribeKey = "sub-c-18d97eee-dc04-11e6-93ca-0619f8945a4f";
 
+    // user list
+    var users = [];
+
     // generate a unique user id
-    var userID = 'user' + (Math.floor(Math.random() * 10) + 1).toString();
-    console.log(userID);
+    var userID = 'user' + (Math.floor(Math.random() * 100) + 1).toString();
 
     var pubnub = new PubNub({
         publishKey: publishKey,
         subscribeKey: subscribeKey,
-        ssl: true,
         uuid: userID
     })
 
@@ -33,10 +34,17 @@ $(document).ready(function () {
             }
         },
         presence: function(event) {
-            console.log(event.action);
-            console.log(event.timestamp);
-            console.log(event.uuid);
-            console.log(event.occupancy);
+            var uuid = event.uuid;
+            if (event.action == "join") {
+                users.push(uuid);
+                $("#user-list").append("<li class=\"" + uuid + "\">" + uuid + "</li>");
+                console.log("new user added " + event.uuid);
+            } else if (event.action == "leave") {
+                console.log("user left " + event.uuid);
+                $("#user-list").remove("#" + uuid);
+                users.splice(users.indexOf(event.uuid), 1);
+            }
+            console.log(users);
         }
     });
 
