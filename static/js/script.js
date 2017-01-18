@@ -42,9 +42,9 @@ $(document).ready(function() {
             if(event.action) {
                 if (event.action == 'state-change') {
                     if (event.state.isTyping === true) {
-                        $("#is-typing").html("<em>" + event.uuid + " is typing</em>");
+                        $("#" + event.uuid).text(event.uuid + "is typing...");
                     } else {
-                        $("#is-typing").empty();
+                        $("#" + event.uuid).text(event.uuid);
                     }
                 }
 
@@ -91,11 +91,13 @@ $(document).ready(function() {
             $("#user-list").empty();
             listOfUUIDs.forEach(function(user) {
                 var currentUUID = user["uuid"];
+                var active;;
                 if (currentUUID == userID) {
-                    $("#user-list").append("<li><strong>" + currentUUID  +" (current)</strong></li>");
+                    active = "active";
                 } else {
-                    $("#user-list").append("<li>" + currentUUID  +"</li>");
+                    active = "";
                 }
+                $("#user-list").append("<li id=\"" + currentUUID + "\" class=\"list-group-item  " + active + "\">" + currentUUID +"</li>");
             })
         }
     }

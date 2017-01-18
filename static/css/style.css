@@ -1,11 +1,12 @@
 html, body, section, .full-height {
-    height: 100%;
+    height: 97%;
 }
 
 #raw-pad {
     font-family: Menlo, Monaco, Inconsolata, "Courier New", monospace;
 
-    border: none;
+    border-top: 1px solid black;
+    border-left: none;
     /* what happens if content overflows the box */
     overflow: auto;
     outline: none;
@@ -18,6 +19,7 @@ html, body, section, .full-height {
 
 #markdown {
     overflow: auto;
-    border-left: 1px solid black;
     border-right: 1px solid black;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
 }
