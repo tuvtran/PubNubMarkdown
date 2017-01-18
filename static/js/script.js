@@ -15,7 +15,7 @@ $(document).ready(function() {
     const subscribeKey = "sub-c-18d97eee-dc04-11e6-93ca-0619f8945a4f";
 
     // user list
-    var users = [];
+    var listOfUUIDs;
 
     // generate a unique user id
     var userID = 'user' + (Math.floor(Math.random() * 100) + 1).toString();
@@ -23,7 +23,9 @@ $(document).ready(function() {
     var pubnub = new PubNub({
         publishKey: publishKey,
         subscribeKey: subscribeKey,
-        uuid: userID
+        uuid: userID,
+        presenceTimeout: 60,         // for testing only
+        heartBeatInterval: 15
     })
 
     pubnub.addListener({
@@ -37,17 +39,17 @@ $(document).ready(function() {
             }
         },
         presence: function(event) {
-            var uuid = event.uuid;
-            if (event.action == "join") {
-                users.push(uuid);
-                $("#user-list").append("<li class=\"" + uuid + "\">" + uuid + "</li>");
-                console.log("new user added " + event.uuid);
-            } else if (event.action == "leave") {
-                console.log("user left " + event.uuid);
-                $("#user-list").remove("#" + uuid);
-                users.splice(users.indexOf(event.uuid), 1);
+            if(event.action) {
+                pubnub.hereNow({
+                    channel: 'markdown'
+                }, function(status, response) {
+                    // every time there is an event in presence, update the user list again
+                    listOfUUIDs = response["channels"]["markdown"]["occupants"];
+                    updateUsersList();
+                    console.log(listOfUUIDs);
+                });
             }
-            console.log(users);
+            console.log(event.uuid + " " + event.action + " occupancy is now " + event.occupancy);
         }
     });
 
@@ -56,6 +58,7 @@ $(document).ready(function() {
         withPresence: true
     });
 
+    // publish message
     var publishValue = function(text) {
         pubnub.publish(
             {
@@ -72,6 +75,21 @@ $(document).ready(function() {
                 }
             }
         );
+    }
+
+    // Update the online user list in real time
+    var updateUsersList = function() {
+        if (listOfUUIDs) {
+            $("#user-list").empty();
+            listOfUUIDs.forEach(function(user) {
+                var currentUUID = user["uuid"];
+                if (currentUUID == userID) {
+                    $("#user-list").append("<li><strong>" + currentUUID  +" (current)</strong></li>");
+                } else {
+                    $("#user-list").append("<li>" + currentUUID  +"</li>");
+                }
+            })
+        }
     }
 
     // When user is typing
