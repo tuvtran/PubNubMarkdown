@@ -7,6 +7,8 @@
     <!-- Bootstrap -->
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- FontAwesome -->
+    <script src="https://use.fontawesome.com/634ba7a49b.js"></script>
     <!-- JQuery -->
     <script src="static/js/jquery-3.1.1.slim.min.js"></script>
     <!-- PubNub -->
@@ -15,11 +17,19 @@
     <link rel="stylesheet" type="text/css" href="static/css/style.css">
 </head>
 <body class="container-fluid">
-    <nav class="navbar navbar-inverse">
+    <nav class="navbar navbar-default">
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li><a href="#">Open</a></li>
-            <li><a href="#">Save</a></li>
+            <li><a href="#"><i class="fa fa-bold" aria-hidden="true"></i></a>
+            <li><a href="#"><i class="fa fa-italic" aria-hidden="true"></i></a>
+            <li><a href="#"><i class="fa fa-link" aria-hidden="true"></i></a>
+            <li><a href="#"><i class="fa fa-picture-o" aria-hidden="true"></i></a>
+            <li><a href="#"><i class="fa fa-code" aria-hidden="true"></i></a>
+            <li><a href="#"><i class="fa fa-quote-left" aria-hidden="true"></i></a>
+            <li><a href="#"><i class="fa fa-list-ol" aria-hidden="true"></i></a>
+            <li><a href="#"><i class="fa fa-list-ul" aria-hidden="true"></i></a>
+            <li><a href="#"><i class="fa fa-header" aria-hidden="true"></i></a>
+            <li><a href="#"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
@@ -29,9 +39,9 @@
        <textarea class="col-md-5 full-height" id="raw-pad" placeholder="Write your text here"></textarea> 
        <div class="col-md-5 full-height" id="markdown"></div>
        <div class="col-md-2 full-height">
-           <p id="is-typing"><p>
-           <h4 style="text-align: center;">ONLINE</h4>
+       <h4 style="text-align: center;">ONLINE</h4>
            <ul id="user-list" class="list-group"></ul>
+           <p id="is-typing"><p>
        </div>
     </section>
 
