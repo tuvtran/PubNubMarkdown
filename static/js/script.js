@@ -11,8 +11,8 @@ $(document).ready(function() {
     var converter = new showdown.Converter();
 
     // Initialize PubNub
-    const publishKey = "pub-c-851e2df6-cacf-487b-a0cc-39177adc1c03";
-    const subscribeKey = "sub-c-18d97eee-dc04-11e6-93ca-0619f8945a4f";
+    var publishKey = "pub-c-851e2df6-cacf-487b-a0cc-39177adc1c03";
+    var subscribeKey = "sub-c-18d97eee-dc04-11e6-93ca-0619f8945a4f";
 
     // user list
     var listOfUUIDs;
@@ -24,8 +24,8 @@ $(document).ready(function() {
         publishKey: publishKey,
         subscribeKey: subscribeKey,
         uuid: userID,
-        presenceTimeout: 60,         // for testing only
-        heartBeatInterval: 15
+        presenceTimeout: 60,        // for testing only
+        heartBeatInterval: 15       // for testing only   
     })
 
     pubnub.addListener({
@@ -40,6 +40,14 @@ $(document).ready(function() {
         },
         presence: function(event) {
             if(event.action) {
+                if (event.action == 'state-change') {
+                    if (event.state.isTyping === true) {
+                        $("#is-typing").html(event.uuid + " is typing");
+                    } else {
+                        $("#is-typing").empty();
+                    }
+                }
+
                 pubnub.hereNow({
                     channel: 'markdown'
                 }, function(status, response) {
@@ -92,10 +100,28 @@ $(document).ready(function() {
         }
     }
 
+    // handler for TAB keypress
+    $pad.on("keydown", function(e) {
+        var keyCode = e.keyCode || e.which;
+
+        if (keyCode == 9) {
+            e.preventDefault();
+            $pad.val($pad.val() + "    ");
+        }
+    })
+
     // When user is typing
-    $pad.on('input propertychange keydown', function() {
+    $pad.on('input propertychange', function(e) {
         var markdownText = $pad.val();
         $markdown.html(converter.makeHtml(markdownText));
+
+        // trigger an event if the user is typing
+        pubnub.setState({
+            state: {
+                isTyping: true
+            },
+            channels: ['markdown']
+        }, function(status, response) {});
     });
 
     // When user is done typing for 250ms, trigger the doneTyping event handler
@@ -103,6 +129,14 @@ $(document).ready(function() {
         clearTimeout(typingTimer);
         typingTimer = setTimeout(function() {
             publishValue($pad.val());
+
+            // trigger an event if the user is done typing
+            pubnub.setState({
+                state: {
+                    isTyping: false
+                },
+                channels: ['markdown']
+            }, function(status, response) {});
         }, doneTypingInterval);
     });
 });
