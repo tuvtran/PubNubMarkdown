@@ -42,7 +42,7 @@ $(document).ready(function() {
             if(event.action) {
                 if (event.action == 'state-change') {
                     if (event.state.isTyping === true) {
-                        $("#is-typing").html(event.uuid + " is typing");
+                        $("#is-typing").html("<em>" + event.uuid + " is typing</em>");
                     } else {
                         $("#is-typing").empty();
                     }
