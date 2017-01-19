@@ -110,7 +110,7 @@ $(document).ready(function() {
             e.preventDefault();
             $pad.val($pad.val() + "    ");
         }
-    })
+    });
 
     // When user is typing
     $pad.on('input propertychange', function(e) {
@@ -140,5 +140,86 @@ $(document).ready(function() {
                 channels: ['markdown']
             }, function(status, response) {});
         }, doneTypingInterval);
+    });
+
+    // handlers for Markdown editing toolbar
+
+    // hyperlink
+    $(".link").on('mousedown', function() {
+        var text = "[Description text](http://)";
+        $pad.val($pad.val() + text).trigger('keyup');
+    });
+
+    // image
+    $(".pic").on('mousedown', function() {
+        var text = "![Image description](http://)";
+        $pad.val($pad.val() + text).trigger('keyup');
+    });
+
+    // quote
+    $(".quote").on('mousedown', function() {
+        var text = "\n> ";
+        $pad.val($pad.val() + text).trigger('keyup');
+    });
+
+    // unordered list
+    $(".ul").on('mousedown', function() {
+        var text = "\n* ";
+        $pad.val($pad.val() + text).trigger('keyup');
+    });
+
+    // ordered list
+    $(".ol").on('mousedown', function() {
+        var text = "\n1. ";
+        $pad.val($pad.val() + text).trigger('keyup');
+    });
+
+    // bold
+    $(".bold").on('mousedown', function() {
+        // select the area which has the highlighted text
+        var area = document.getElementById("raw-pad")
+
+        // start and end position of highlighted text
+        var startPos = area.selectionStart;
+        var endPos = area.selectionEnd;
+
+        console.log(startPos + " " + endPos);
+
+        var text = $pad.val();
+        text = text.substring(0, startPos) + "**" + text.substring(startPos, endPos) + "**" + text.substring(endPos, text.length);
+        $pad.val(text).trigger('keyup');
+    });
+
+    // italic
+    $(".italic").on('mousedown', function() {
+        // select the area which has the highlighted text
+        var area = document.getElementById("raw-pad")
+
+        // start and end position of highlighted text
+        var startPos = area.selectionStart;
+        var endPos = area.selectionEnd;
+
+        console.log(startPos + " " + endPos);
+
+        var text = $pad.val();
+        text = text.substring(0, startPos) + "*" + text.substring(startPos, endPos) + "*" + text.substring(endPos, text.length);
+        $pad.val(text).trigger('keyup');
+    });
+
+    // horizontal line
+    $(".dot").on('mousedown', function(){
+        var text = "\n\n----------\n\n";
+        $pad.val($pad.val() + text).trigger('keyup');
+    });
+
+    // code block
+    $(".code").on('mousedown', function(){
+        var text = "\n```\ninsert code here\n```\n";
+        $pad.val($pad.val() + text).trigger('keyup');
+    });
+
+    // make something a header
+    $(".header").on('mousedown', function() {
+
     });
 });
