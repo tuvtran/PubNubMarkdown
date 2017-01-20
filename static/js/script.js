@@ -146,32 +146,72 @@ $(document).ready(function() {
 
     // hyperlink
     $(".link").on('mousedown', function() {
-        var text = "[Description text](http://)";
-        $pad.val($pad.val() + text).trigger('keyup');
+        // select the area which has the highlighted text
+        var area = document.getElementById("raw-pad")
+
+        // start and end position of highlighted text
+        var startPos = area.selectionStart;
+        var endPos = area.selectionEnd;
+
+        var text = $pad.val();
+        text = text.substring(0, startPos) +  "[Description text](http://) " + text.substring(startPos, text.length);
+        $pad.val(text).trigger('keyup');
     });
 
     // image
     $(".pic").on('mousedown', function() {
-        var text = "![Image description](http://)";
-        $pad.val($pad.val() + text).trigger('keyup');
+        // select the area which has the highlighted text
+        var area = document.getElementById("raw-pad")
+
+        // start and end position of highlighted text
+        var startPos = area.selectionStart;
+        var endPos = area.selectionEnd;
+
+        var text = $pad.val();
+        text = text.substring(0, startPos) + "![Image description](http://)" + text.substring(startPos, text.length);
+        $pad.val(text).trigger('keyup');
     });
 
     // quote
     $(".quote").on('mousedown', function() {
-        var text = "\n> ";
-        $pad.val($pad.val() + text).trigger('keyup');
+        // select the area which has the highlighted text
+        var area = document.getElementById("raw-pad")
+
+        // start and end position of highlighted text
+        var startPos = area.selectionStart;
+        var endPos = area.selectionEnd;
+
+        var text = $pad.val();
+        text = text.substring(0, startPos) + "\n> " + text.substring(startPos, text.length);
+        $pad.val(text).trigger('keyup');
     });
 
     // unordered list
     $(".ul").on('mousedown', function() {
-        var text = "\n* ";
-        $pad.val($pad.val() + text).trigger('keyup');
+        // select the area which has the highlighted text
+        var area = document.getElementById("raw-pad")
+
+        // start and end position of highlighted text
+        var startPos = area.selectionStart;
+        var endPos = area.selectionEnd;
+
+        var text = $pad.val();
+        text = text.substring(0, startPos) + "\n* " + text.substring(startPos, text.length);
+        $pad.val(text).trigger('keyup');
     });
 
     // ordered list
     $(".ol").on('mousedown', function() {
-        var text = "\n1. ";
-        $pad.val($pad.val() + text).trigger('keyup');
+        // select the area which has the highlighted text
+        var area = document.getElementById("raw-pad")
+
+        // start and end position of highlighted text
+        var startPos = area.selectionStart;
+        var endPos = area.selectionEnd;
+
+        var text = $pad.val();
+        text = text.substring(0, startPos) + "\n1. " + text.substring(startPos, text.length);
+        $pad.val(text).trigger('keyup');
     });
 
     // bold
@@ -206,14 +246,30 @@ $(document).ready(function() {
 
     // horizontal line
     $(".dot").on('mousedown', function(){
-        var text = "\n\n----------\n\n";
-        $pad.val($pad.val() + text).trigger('keyup');
+        // select the area which has the highlighted text
+        var area = document.getElementById("raw-pad")
+
+        // start and end position of highlighted text
+        var startPos = area.selectionStart;
+        var endPos = area.selectionEnd;
+
+        var text = $pad.val();
+        text = text.substring(0, startPos) + "\n\n----------\n\n" + text.substring(startPos, text.length);
+        $pad.val(text).trigger('keyup');
     });
 
     // code block
     $(".code").on('mousedown', function(){
-        var text = "\n```\ninsert code here\n```\n";
-        $pad.val($pad.val() + text).trigger('keyup');
+        // select the area which has the highlighted text
+        var area = document.getElementById("raw-pad")
+
+        // start and end position of highlighted text
+        var startPos = area.selectionStart;
+        var endPos = area.selectionEnd;
+
+        var text = $pad.val();
+        text = text.substring(0, startPos) + "\n```\ninsert code here\n```\n" + text.substring(startPos, text.length);
+        $pad.val(text).trigger('keyup');
     });
 
     // make something a header
@@ -223,10 +279,11 @@ $(document).ready(function() {
 
         // start and end position of highlighted text
         var startPos = area.selectionStart;
+        var endPos = area.selectionEnd;
 
         // add # in the beginning the selected text
         var text = $pad.val();
-        text = "#" + text.substring(startPos, text.length);
+        text = text.substring(0, startPos) + "#" + text.substring(startPos, text.length);
         $pad.val(text).trigger('keyup');
     });
 });
