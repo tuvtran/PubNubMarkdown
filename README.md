@@ -2,7 +2,7 @@
 
 A Markdown editor utilizing PubNub's API for real-time collaborative experience
 
-Link to test: https://tuvttran.com/PubNubMarkdown
+Link to test: https://tuvtran.com/PubNubMarkdown
 
 ## Description:
 
