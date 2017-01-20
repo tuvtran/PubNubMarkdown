@@ -183,8 +183,7 @@ $(document).ready(function() {
         var startPos = area.selectionStart;
         var endPos = area.selectionEnd;
 
-        console.log(startPos + " " + endPos);
-
+        // add ** wrapping the selected text
         var text = $pad.val();
         text = text.substring(0, startPos) + "**" + text.substring(startPos, endPos) + "**" + text.substring(endPos, text.length);
         $pad.val(text).trigger('keyup');
@@ -199,8 +198,7 @@ $(document).ready(function() {
         var startPos = area.selectionStart;
         var endPos = area.selectionEnd;
 
-        console.log(startPos + " " + endPos);
-
+        // add * wrapping the selected text
         var text = $pad.val();
         text = text.substring(0, startPos) + "*" + text.substring(startPos, endPos) + "*" + text.substring(endPos, text.length);
         $pad.val(text).trigger('keyup');
@@ -220,6 +218,15 @@ $(document).ready(function() {
 
     // make something a header
     $(".header").on('mousedown', function() {
+        // select the area which has the highlighted text
+        var area = document.getElementById("raw-pad")
 
+        // start and end position of highlighted text
+        var startPos = area.selectionStart;
+
+        // add # in the beginning the selected text
+        var text = $pad.val();
+        text = "#" + text.substring(startPos, text.length);
+        $pad.val(text).trigger('keyup');
     });
 });
