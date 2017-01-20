@@ -6,9 +6,9 @@ Link to test: http://www.tuvtran.com/PubNubMarkdown
 
 ## Description:
 
-This is a super simple Markdown editor built with HTML, CSS, JavaScript (JQuery) and PubNub's API included in order for multiple users to edit the same document. The content of the document will be updated in real-time for whoever is online at the moment. Multiple users editing a document at the same time would require the operational transformational algorithm, which takes some efforts to implement, so I simplify the application such that when one user is typing, there is a "typing indicator" and other users would know not to edit to avoid any confusions.
+This is a super simple Markdown editor built with HTML, CSS, JavaScript (JQuery) and PubNub's API included in order for multiple users to edit the same document. The content of the document will be updated in real-time for whoever is online at the moment. However, multiple users editing a document at the same time would require the operational transformational algorithm, which takes some efforts to implement, so I simplify the application such that when one user is typing, there is a "typing indicator" and other users would know not to edit to avoid any confusions.
 
-At the time of writing this documentation, I am using the Markdown editor. A photo is attached below to show that.
+At the time of writing, I am using this Markdown editor. A photo is attached below to show that.
 
 ![Markdown editor](https://s24.postimg.org/x7ci2yg1h/Screen_Shot_2017_01_19_at_7_36_04_PM.png)
 
