@@ -5,7 +5,7 @@ $(document).ready(function() {
 
     // set up timeout to trigger event when user finished typing
     var typingTimer;                // time identifier
-    var doneTypingInterval = 500;   // time in ms, in this case it's 250ms
+    var doneTypingInterval = 500;   // time in ms, in this case it's 500ms
 
     // Initialize Showdownjs
     var converter = new showdown.Converter();
