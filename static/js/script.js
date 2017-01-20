@@ -40,6 +40,7 @@ $(document).ready(function() {
         },
         presence: function(event) {
             if(event.action) {
+                // typing indicator when a user is typing 
                 if (event.action == 'state-change') {
                     if (event.state.isTyping === true) {
                         $("#is-typing").html("<em>" + event.uuid + " is typing</em>");
@@ -54,10 +55,8 @@ $(document).ready(function() {
                     // every time there is an event in presence, update the user list again
                     listOfUUIDs = response["channels"]["markdown"]["occupants"];
                     updateUsersList();
-                    console.log(listOfUUIDs);
                 });
             }
-            console.log(event.uuid + " " + event.action + " occupancy is now " + event.occupancy);
         }
     });
 
@@ -71,7 +70,7 @@ $(document).ready(function() {
         pubnub.publish(
             {
                 message: {
-                    such: text
+                    such: text              // to allow empty string to be sent as message
                 },
                 channel: 'markdown'
             },
@@ -79,7 +78,7 @@ $(document).ready(function() {
                 if (status.error) {
                     console.log(status);
                 } else {
-                    console.log("message published ", response.timetoken);
+                    // console.log("message published ", response.timetoken);
                 }
             }
         );
@@ -97,6 +96,7 @@ $(document).ready(function() {
                 } else {
                     active = "";
                 }
+                // mark the active user as a different color
                 $("#user-list").append("<li id=\"" + currentUUID + "\" class=\"list-group-item  " + active + "\">" + currentUUID +"</li>");
             })
         }
